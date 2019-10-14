@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+
+	<script>
+		function showImage() {
+			let image = document.getElementById("image").style.display = "block";
+		}
+
+		function resetGame() {
+			location.reload()
+		}
+		document.addEventListener("keydown", moveSelection, false)
+
+		function leftPlayerButton() {
+			let element = document.getElementById("image");
+			element.style.left = parseInt(element.style.left) - 5 + 'px'
+		};
+
+		function rightPlayerButton() {
+			let element = document.getElementById("image");
+			element.style.left = parseInt(element.style.left) + 5 + 'px'
+		}
+
+		function moveSelection(event) {
+			console.log(event)
+			switch (event.keyCode) {
+				case 17:
+					leftPlayerButton();
+					break;
+				case 39:
+					rightPlayerButton();
+					break;
+			}
+		};
+	</script>
+
+</head>
+
+<body
+	style="display: flex; background-color:black; font-family: sans-serif; align-content: center; justify-content: center; color: blanchedalmond"
+	onkeydown="" onkeyup="">
+	<div id="game-area" style="background-color:blanchedalmond; width: 85%; height: 500px;">
+		<section id="vertical-line" style="border-left: 6px solid red; height:500px; position:absolute; left: 40%">
+		</section>
+		<img src="images/photo.jpg"
+			style="height: 250px; width: 150px; position: absolute; margin: 100px 37%; left: 0; display: none" id="image">
+	</div>
+
+	<div>
+		<button type="button" style="display: inline-block" onclick="showImage()" id="start">Start Game</button>
+		<button type="reset" onclick="resetGame()">Reset Game</button>
+		<p>Left Player press ctrl</p>
+		<p>Right Player press right arrow</p>
+	</div>
+
+
+
+</body>
+
+</html>
