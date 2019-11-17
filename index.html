@@ -2,65 +2,138 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tug of War</title>
 
-	<script>
-		function showImage() {
-			let image = document.getElementById("image").style.display = "block";
-		}
+  <style>
+    body {
+      background-color: black;
+      font-family: sans-serif;
+      align-content: center;
+      justify-content: center;
+      color: blanchedalmond;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+    }
 
-		function resetGame() {
-			location.reload()
-		}
-		document.addEventListener("keydown", moveSelection, false)
+    #game-area {
+      background-color: blanchedalmond;
+      width: 100vw;
+      height: 85vh;
+    }
 
-		function leftPlayerButton() {
-			let element = document.getElementById("image");
-			element.style.left = parseInt(element.style.left) - 5 + 'px'
-		};
+    #buttons {
+      text-align: center;
+      display: flex;
+      justify-content: space-evenly
+    }
 
-		function rightPlayerButton() {
-			let element = document.getElementById("image");
-			element.style.left = parseInt(element.style.left) + 5 + 'px'
-		}
+    #instructionScores {
+      display: flex;
+      justify-content: space-between;
+    }
 
-		function moveSelection(event) {
-			console.log(event)
-			switch (event.keyCode) {
-				case 17:
-					leftPlayerButton();
-					break;
-				case 39:
-					rightPlayerButton();
-					break;
-			}
-		};
-	</script>
+    #rope {
+      display: none;
+      position: absolute;
+      width: 35%;
+      height: 5px;
+      background: brown;
+      border: black 2px solid;
+      left: 50%;
+      top: 45%;
+      transform: translate(-50%, -50%);
+    }
+
+    #vertical-line {
+      border-left: 6px solid red;
+      height: 85vh;
+      position: absolute;
+      left: 50vw
+    }
+
+    .scores {
+      display: none;
+    }
+  </style>
 
 </head>
 
-<body
-	style="display: flex; background-color:black; font-family: sans-serif; align-content: center; justify-content: center; color: blanchedalmond"
-	onkeydown="" onkeyup="">
-	<div id="game-area" style="background-color:blanchedalmond; width: 85%; height: 500px;">
-		<section id="vertical-line" style="border-left: 6px solid red; height:500px; position:absolute; left: 40%">
-		</section>
-		<img src="images/photo.jpg"
-			style="height: 250px; width: 150px; position: absolute; margin: 100px 37%; left: 0; display: none" id="image">
-	</div>
+<body>
+  <main>
 
-	<div>
-		<button type="button" style="display: inline-block" onclick="showImage()" id="start">Start Game</button>
-		<button type="reset" onclick="resetGame()">Reset Game</button>
-		<p>Left Player press ctrl</p>
-		<p>Right Player press right arrow</p>
-	</div>
+    <section id="game-area">
+      <section id="vertical-line">
+      </section>
+      <div id="rope">
+    </section>
 
+    <section id="instructionScores">
+      <p>Left Player press ctrl</p>
+      <p id="leftPlayerScore" class="scores">Left Player Score: 0</p>
+      <p id="rightPlayerScore" class="scores">Right Player Score: 0</p>
+      <p>Right Player press right arrow</p>
+    </section>
 
+    <section id="buttons">
+      <button id="startGame" onclick="startGame()">
+        Start Game
+      </button>
+      <button id="resetGame" onclick="resetGame()">
+        Reset Game
+      </button>
+    </section>
+  </main>
 
 </body>
+
+<script>
+  let ropePosition = 50;
+  let rope = document.getElementById("rope");
+  let rightPlayerScore = document.getElementById("rightPlayerScore");
+  let leftPlayerScore = document.getElementById("leftPlayerScore");
+  let leftWin = 0;
+  let rightWin = 0;
+
+  const startGame = () => {
+    rope.style.display = "block"
+    rightPlayerScore.style.display = "block";
+    leftPlayerScore.style.display = "block"
+  };
+
+  const resetGame = () => {
+    location.reload()
+  };
+
+  onkeydown = event => {
+    let key = event.key;
+    if (key == "Control") {
+      ropePosition -= 3;
+    } else if (key == "ArrowRight") {
+      ropePosition += 3;
+    }
+    win();
+  };
+
+  const win = () => {
+    if (ropePosition >= 69) {
+      alert("Right Player Wins!");
+      ropePosition = 50;
+      rightWin++;
+      rightPlayerScore.innerHTML = "Right Player Score: " + rightWin;
+    } else if (ropePosition <= 31) {
+      alert("Left Player Wins!");
+      ropePosition = 50;
+      leftWin++;
+      leftPlayerScore.innerHTML = "Left Player Score: " + leftWin;
+    };
+    rope.style.left = ropePosition + "%";
+  };
+</script>
 
 </html>
